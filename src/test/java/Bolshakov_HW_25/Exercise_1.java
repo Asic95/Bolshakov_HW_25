@@ -23,7 +23,6 @@ public class Exercise_1 extends BaseTestClass {
                 asert.assertTrue(OurLoginPage.checkLogIn());
                 OurLoginPage.LogOut();
             }
-
         }
         asert.assertAll();
     }

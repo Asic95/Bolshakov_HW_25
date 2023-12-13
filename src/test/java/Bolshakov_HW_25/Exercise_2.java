@@ -5,8 +5,8 @@ import org.testng.asserts.SoftAssert;
 
 public class Exercise_2 extends BaseTestClass {
 
-    @Test(testName = "Перевірка продуктів на сторнці")
-    public void Login_with_not_valid_data() {
+    @Test(testName = "Додавання продуктів в корзину і їх видалення")
+    public void Add_items_to_cart() throws InterruptedException {
 
         LoginPage OurLoginPage = new LoginPage(driver);
         ProductPage OurProductPage = new ProductPage(driver);
@@ -16,9 +16,13 @@ public class Exercise_2 extends BaseTestClass {
         OurLoginPage.InsertUserpass(Users_data.SET1.getPassword());
         OurLoginPage.LogIn();
 
-        //OurProductPage.checkProducts();
-        asert.assertEquals(OurProductPage.checkProducts(), 6);
+        asert.assertEquals(OurProductPage.checkProducts(), 6);                         // перевірка кількості товарів на сторінці
+        asert.assertEquals(OurProductPage.addProductsToCart(1), 1);             // перевірка , що тільки 1 товар в кошику
+        asert.assertEquals(OurProductPage.addProductsToCart(2), 2);             // перевірка , що додалося 2 товара
 
+        asert.assertEquals(OurProductPage.delete_item_from_cart(),1);     //Видаляємо другий доданий продукт і перевіряємо кількість товарів в корзині
+
+        OurLoginPage.LogOut();
         asert.assertAll();
     }
 }
