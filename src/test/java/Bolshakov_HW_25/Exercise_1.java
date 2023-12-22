@@ -14,7 +14,7 @@ public class Exercise_1 extends BaseTestClass {
 
         for (Users_data userData : Users_data.values()) {
             if (userData.getUsername().equals("locked_out_user")) {
-                continue;
+                // пропускаємо перевірку для locked user
             } else {
                 OurLoginPage.InsertUsername(userData.getUsername());
                 OurLoginPage.InsertUserpass(userData.getPassword());

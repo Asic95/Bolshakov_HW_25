@@ -44,30 +44,34 @@ public class ProductPage {
         return productItem.size();
     }
 
-    public int addProductsToCart(int amount) throws InterruptedException {
-        int randomProduct, randomProduct2;
+    public int addProductsToCart(int randomProduct, boolean isFirstItem) throws InterruptedException {
+        int randomProduct2;
         int isCartOkay = 0;
-        randomProduct = (int) (Math.random() * (productItem.size()-1));         // рандомно вибираємо будь-яке значення для додавання в корзину
-        randomProduct2 = (int) (Math.random() * (productItem.size()-1));         // рандомно вибираємо будь-яке значення для додавання в корзину
-        if (amount == 1) {
+        int amount = 0;
+        if (isFirstItem) {
             for (int k = 0; k < productItem.size(); k++) {
                 if (k == randomProduct) {
+                    amount = 1;
                     addToCartButton.get(k).click();
-                    isCartOkay = checkItemsInCart(amount);
+                    isCartOkay = checkItemsInCart();
                     backFromCartButton.click();
+                    break;
                 }
             }
         } else {
+            randomProduct2 = (int) (Math.random() * (productItem.size() - 1));                // рандомно вибираємо будь-яке значення для додавання в корзину
             if (randomProduct2 == randomProduct) {
                 while (randomProduct2 == randomProduct) {
-                    randomProduct2 = (int) (0 + (Math.random() * (productItem.size())));    // перевизначаємо значення ID другого продукту якщо воно збігається з першим
+                    randomProduct2 = (int) (Math.random() * (productItem.size() - 1));          // перевизначаємо значення ID другого продукту якщо воно збігається з першим
                 }
             }
             for (int k = 0; k < productItem.size(); k++) {
                 if (k == randomProduct2) {
+                    amount = 2;
                     addToCartButton.get(k).click();
-                    isCartOkay = checkItemsInCart(amount);
+                    isCartOkay = checkItemsInCart();
                     backFromCartButton.click();
+                    break;
                 }
             }
         }
@@ -77,14 +81,14 @@ public class ProductPage {
             return 0;
     }
 
-    public int checkItemsInCart(int amount) throws InterruptedException {
+    public int checkItemsInCart() throws InterruptedException {               // перевіряємо скільки товарів лежить в корзині
         goToCart.click();
         wait.until(ExpectedConditions.visibilityOfAllElements(cartItems));
         Thread.sleep(1500);                                             //пауза для візуального сприйняття
         return cartItems.size();
     }
 
-    public int delete_item_from_cart() throws InterruptedException {
+    public int delete_item_from_cart() throws InterruptedException {        // видаляємо товар з корзини
         goToCart.click();
         removeButton.get(0).click();
         Thread.sleep(1500);                                             //пауза для візуального сприйняття
